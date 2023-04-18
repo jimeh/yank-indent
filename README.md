@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img width="72px" src="https://github.com/emacs-mirror/emacs/raw/emacs-28.2/etc/images/icons/hicolor/scalable/apps/emacs.svg" alt="Logo"><br />
+  <img width="128px" src="https://raw.githubusercontent.com/jimeh/yank-indent/main/img/yank-indent.svg" alt="Logo"><br />
   yank-indent
 </h1>
 
@@ -9,7 +9,24 @@
   </strong>
 </p>
 
----
+<p align="center">
+  <a href="https://github.com/jimeh/yank-indent/releases">
+    <img src="https://img.shields.io/github/v/tag/jimeh/yank-indent?label=release" alt="GitHub tag (latest SemVer)">
+  </a>
+  <a href="https://github.com/jimeh/yank-indent/commits/main">
+    <img src="https://img.shields.io/github/last-commit/jimeh/yank-indent.svg?style=flat&logo=github&logoColor=white"
+alt="GitHub last commit">
+  </a>
+  <a href="https://github.com/jimeh/yank-indent/issues">
+    <img src="https://img.shields.io/github/issues-raw/jimeh/yank-indent.svg?style=flat&logo=github&logoColor=white" alt="GitHub issues">
+  </a>
+  <a href="https://github.com/jimeh/yank-indent/pulls">
+    <img src="https://img.shields.io/github/issues-pr-raw/jimeh/yank-indent.svg?style=flat&logo=github&logoColor=white" alt="GitHub pull requests">
+  </a>
+  <a href="https://github.com/jimeh/yank-indent/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/jimeh/yank-indent.svg?style=flat" alt="License Status">
+  </a>
+</p>
 
 Do you often find yourself fixing the indentation of a code snippet right after
 pasting it somewhere? Never again! yank-indent is the answer.
