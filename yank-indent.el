@@ -52,8 +52,7 @@ If the yanked region contains more characters than the value
 specified by `yank-indent-threshold', the automatic indentation
 will not occur. This helps prevent performance issues when
 working with large blocks of text."
-  :type 'number
-  :group 'yank-indent)
+  :type 'number)
 
 (defcustom yank-indent-derived-modes '(prog-mode tex-mode)
   "Derived major modes where `yank-indent-mode' should be enabled.
@@ -64,8 +63,7 @@ listed in this variable. This is useful when you want to enable
 `yank-indent-mode' for all modes that inherit from a specific
 mode, such as `prog-mode' for programming modes or `text-mode'
 for text editing modes."
-  :type '(repeat symbol)
-  :group 'yank-indent)
+  :type '(repeat symbol))
 
 (defcustom yank-indent-exact-modes '()
   "Major modes where `yank-indent-mode' should be enabled.
@@ -77,8 +75,7 @@ will not be activated in modes derived from those listed here.
 Use this variable to list specific modes where you want
 `yank-indent-mode' to be enabled without affecting their derived
 modes."
-  :type '(repeat symbol)
-  :group 'yank-indent)
+  :type '(repeat symbol))
 
 (defcustom yank-indent-excluded-modes '(cmake-ts-mode
                                         coffee-mode
@@ -103,8 +100,7 @@ modes. This list takes precedence over
 `yank-indent-derived-modes' and `yank-indent-exact-modes'. Use
 this variable to exclude specific modes and their derived modes
 from having `yank-indent-mode' enabled."
-  :type '(repeat symbol)
-  :group 'yank-indent)
+  :type '(repeat symbol))
 
 (defun yank-indent--should-enable-p ()
   "Return non-nil if current mode should be indented."
@@ -121,8 +117,7 @@ When enabled, this mode indents the yanked region according to
 the current mode's indentation rules, provided that the region
 size is less than or equal to `yank-indent-threshold' and no
 prefix argument is given during yanking."
-  :lighter " YI"
-  :group 'yank-indent)
+  :lighter " YI")
 
 (defun yank-indent--enable ()
   "Enable `yank-indent-mode' if the current buffer meets the criteria."
@@ -132,8 +127,7 @@ prefix argument is given during yanking."
 ;;;###autoload
 (define-globalized-minor-mode global-yank-indent-mode
   yank-indent-mode
-  yank-indent--enable
-  :group 'yank-indent)
+  yank-indent--enable)
 
 (defun yank-indent--after-yank-advice (&optional _)
   "Conditionally indent the region (yanked text) after yanking.
