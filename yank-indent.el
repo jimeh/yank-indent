@@ -150,10 +150,7 @@ functions."
         (if (<= (- end beg) yank-indent-threshold)
             (indent-region beg end)))))
 
-;;;###autoload
 (advice-add #'yank :after #'yank-indent--after-yank-advice)
-
-;;;###autoload
 (advice-add #'yank-pop :after #'yank-indent--after-yank-advice)
 
 (provide 'yank-indent)
