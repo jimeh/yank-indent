@@ -13,10 +13,6 @@
   <a href="https://github.com/jimeh/yank-indent/releases">
     <img src="https://img.shields.io/github/v/tag/jimeh/yank-indent?label=release" alt="GitHub tag (latest SemVer)">
   </a>
-  <a href="https://github.com/jimeh/yank-indent/commits/main">
-    <img src="https://img.shields.io/github/last-commit/jimeh/yank-indent.svg?style=flat&logo=github&logoColor=white"
-alt="GitHub last commit">
-  </a>
   <a href="https://github.com/jimeh/yank-indent/issues">
     <img src="https://img.shields.io/github/issues-raw/jimeh/yank-indent.svg?style=flat&logo=github&logoColor=white" alt="GitHub issues">
   </a>
