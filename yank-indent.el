@@ -109,6 +109,33 @@ from having `yank-indent-mode' enabled."
        (or (member major-mode yank-indent-exact-modes)
            (apply #'derived-mode-p yank-indent-derived-modes))))
 
+(defvar yank-indent--active-count 0
+  "Number of active `yank-indent-mode' instances in the current Emacs session.")
+
+(defun yank-indent--enable()
+  "Handle ref counting and maybe add yank advice if needed."
+  (setq yank-indent--active-count (1+ yank-indent--active-count))
+  (when (eq yank-indent--active-count 1)
+    (advice-add #'kill-buffer :around #'yank-indent--kill-buffer-advice)
+    (advice-add #'yank :after #'yank-indent--after-yank-advice)
+    (advice-add #'yank-pop :after #'yank-indent--after-yank-advice)))
+
+(defun yank-indent--disable ()
+  "Handle ref counting and maybe remove yank advice if no longer needed."
+  (when (eq yank-indent--active-count 1)
+    (advice-remove #'yank #'yank-indent--after-yank-advice)
+    (advice-remove #'yank-pop #'yank-indent--after-yank-advice)
+    (advice-remove #'kill-buffer #'yank-indent--kill-buffer-advice))
+  (setq yank-indent--active-count (max (1- yank-indent--active-count) 0)))
+
+(defun yank-indent--kill-buffer-advice (orig-fn &optional buffer)
+  "Track `yank-indent-mode' state when killing BUFFER, then call ORIG-FN."
+  (when buffer
+    (with-current-buffer buffer
+      (when (bound-and-true-p yank-indent-mode)
+        (yank-indent--disable))))
+  (funcall orig-fn buffer))
+
 ;;;###autoload
 (define-minor-mode yank-indent-mode
   "Minor mode for automatically indenting yanked text.
@@ -117,17 +144,18 @@ When enabled, this mode indents the yanked region according to
 the current mode's indentation rules, provided that the region
 size is less than or equal to `yank-indent-threshold' and no
 prefix argument is given during yanking."
-  :lighter " YI")
-
-(defun yank-indent--enable ()
-  "Enable `yank-indent-mode' if the current buffer meets the criteria."
-  (when (yank-indent--should-enable-p)
-    (yank-indent-mode 1)))
+  :lighter " YI"
+  :group 'yank-indent
+  (if yank-indent-mode
+      (yank-indent--enable)
+    (yank-indent--disable)))
 
 ;;;###autoload
 (define-globalized-minor-mode global-yank-indent-mode
   yank-indent-mode
-  yank-indent--enable)
+  (lambda ()
+    (when (yank-indent--should-enable-p)
+        (yank-indent-mode 1))))
 
 (defun yank-indent--after-yank-advice (&optional _)
   "Conditionally indent the region (yanked text) after yanking.
@@ -149,9 +177,6 @@ functions."
             (mark-even-if-inactive transient-mark-mode))
         (if (<= (- end beg) yank-indent-threshold)
             (indent-region beg end)))))
-
-(advice-add #'yank :after #'yank-indent--after-yank-advice)
-(advice-add #'yank-pop :after #'yank-indent--after-yank-advice)
 
 (provide 'yank-indent)
 ;;; yank-indent.el ends here
