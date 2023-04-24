@@ -54,8 +54,13 @@ will not occur. This helps prevent performance issues when
 working with large blocks of text."
   :type 'number)
 
-(defcustom yank-indent-derived-modes '(prog-mode tex-mode)
-  "Derived major modes where `yank-indent-mode' should be enabled.
+(define-obsolete-variable-alias
+  'yank-indent-derived-modes
+  'yank-indent-global-derived-modes
+  "yank-indent 0.2.0")
+
+(defcustom yank-indent-global-derived-modes '(prog-mode tex-mode)
+  "Derived major modes where `global-yank-indent-mode' enables `yank-indent-mode'.
 
 When `global-yank-indent-mode' is enabled, it activates
 `yank-indent-mode' in buffers with major modes derived from those
@@ -65,49 +70,60 @@ mode, such as `prog-mode' for programming modes or `text-mode'
 for text editing modes."
   :type '(repeat symbol))
 
-(defcustom yank-indent-exact-modes '()
-  "Major modes where `yank-indent-mode' should be enabled.
+(define-obsolete-variable-alias
+  'yank-indent-exact-modes
+  'yank-indent-global-exact-modes
+  "yank-indent 0.2.0")
+
+(defcustom yank-indent-global-exact-modes '()
+  "Major modes where `global-yank-indent-mode' enables `yank-indent-mode'.
 
 When `global-yank-indent-mode' is enabled, it activates
 `yank-indent-mode' in buffers with major modes listed in this
-variable. Unlike `yank-indent-derived-modes', `yank-indent-mode'
-will not be activated in modes derived from those listed here.
-Use this variable to list specific modes where you want
-`yank-indent-mode' to be enabled without affecting their derived
-modes."
+variable. Unlike `yank-indent-global-derived-modes',
+`yank-indent-mode' will not be activated in modes derived from
+those listed here. Use this variable to list specific modes where
+you want `yank-indent-mode' to be enabled without affecting their
+derived modes."
   :type '(repeat symbol))
 
-(defcustom yank-indent-excluded-modes '(cmake-ts-mode
-                                        coffee-mode
-                                        conf-mode
-                                        haml-mode
-                                        makefile-automake-mode
-                                        makefile-bsdmake-mode
-                                        makefile-gmake-mode
-                                        makefile-imake-mode
-                                        makefile-makepp-mode
-                                        makefile-mode
-                                        python-mode
-                                        python-ts-mode
-                                        slim-mode
-                                        yaml-mode
-                                        yaml-ts-mode)
-  "Major modes where `yank-indent-mode' should not be enabled.
+(define-obsolete-variable-alias
+  'yank-indent-excluded-modes
+  'yank-indent-global-excluded-modes
+  "yank-indent 0.2.0")
+
+(defcustom yank-indent-global-excluded-modes '(cmake-ts-mode
+                                               coffee-mode
+                                               conf-mode
+                                               haml-mode
+                                               makefile-automake-mode
+                                               makefile-bsdmake-mode
+                                               makefile-gmake-mode
+                                               makefile-imake-mode
+                                               makefile-makepp-mode
+                                               makefile-mode
+                                               python-mode
+                                               python-ts-mode
+                                               slim-mode
+                                               yaml-mode
+                                               yaml-ts-mode)
+  "Major modes where `global-yank-indent-mode' does not enable `yank-indent-mode'.
 
 `global-yank-indent-mode' will not activate `yank-indent-mode' in
 buffers with major modes listed in this variable or their derived
 modes. This list takes precedence over
-`yank-indent-derived-modes' and `yank-indent-exact-modes'. Use
-this variable to exclude specific modes and their derived modes
-from having `yank-indent-mode' enabled."
+`yank-indent-global-derived-modes' and
+`yank-indent-global-exact-modes'. Use this variable to exclude
+specific modes and their derived modes from having
+`yank-indent-mode' enabled."
   :type '(repeat symbol))
 
 (defun yank-indent--should-enable-p ()
   "Return non-nil if current mode should be indented."
   (and (not (minibufferp))
-       (not (member major-mode yank-indent-excluded-modes))
-       (or (member major-mode yank-indent-exact-modes)
-           (apply #'derived-mode-p yank-indent-derived-modes))))
+       (not (member major-mode yank-indent-global-excluded-modes))
+       (or (member major-mode yank-indent-global-exact-modes)
+           (apply #'derived-mode-p yank-indent-global-derived-modes))))
 
 (defvar yank-indent--initial-setup nil)
 
