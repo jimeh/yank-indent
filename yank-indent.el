@@ -3,8 +3,10 @@
 ;; Author: Jim Myhrberg <contact@jimeh.me>
 ;; URL: https://github.com/jimeh/yank-indent
 ;; Keywords: convenience, yank, indent
-;; Version: 0.1.0
 ;; Package-Requires: ((emacs "25.1"))
+;; x-release-please-start-version
+;; Version: 0.1.0
+;; x-release-please-end
 
 ;; This file is not part of GNU Emacs.
 
