@@ -164,7 +164,7 @@ prefix argument is given during yanking."
   yank-indent-mode
   (lambda ()
     (when (yank-indent--should-enable-p)
-        (yank-indent-mode 1))))
+      (yank-indent-mode 1))))
 
 (defun yank-indent--after-yank-advice (&optional _)
   "Conditionally indent the region (yanked text) after yanking.
