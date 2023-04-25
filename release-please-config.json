@@ -1,6 +1,4 @@
 {
-  "bootstrap-sha": "e3fdaa7f673a8b8d43c2ac16f8a3cdfe8b3ab6c1",
-  "last-release-sha": "e3fdaa7f673a8b8d43c2ac16f8a3cdfe8b3ab6c1",
   "packages": {
     ".": {
       "release-type": "simple",
