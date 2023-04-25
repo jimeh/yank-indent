@@ -29,10 +29,14 @@ pasting it somewhere? Never again! yank-indent is the answer.
 
 ## Features
 
-- A fire-and-forget style global mode that does the right thing most of time.
-  Can be customized if you find it enables `yank-indent-mode` when it shouldn't.
-- Configurable size threshold to prevent triggering indentation on very large
-  regions which may cause performance issues in with some major-modes.
+- `yank-indent-mode` minor-mode that automatically calls `indent-region` on
+  yanked/pasted text.
+- `global-yank-indent-mode` which is a set-it-and-forget-it style global mode
+  that enables `yank-indent-mode` in relevant buffers, with a sensible default
+  list of major-modes to exclude.
+- By default does not trigger `indent-region` if pasted text is longer than 5000
+  characters. This threshold can be can be customized with
+  `yank-indent-threshold`.
 
 ## Installation
 
@@ -54,6 +58,14 @@ Place `yank-indent.el` somewhere in your `load-path` and require it. For example
 (require 'yank-indent)
 (global-yank-indent-mode t)
 ```
+
+## Setup & Teardown
+
+Required setup that registers advice on `yank` and `yank-pop` commands is
+automatically done the first time that `yank-indent-mode` is enabled.
+
+Should you want to though you can manually add/remove the required advice with
+`yank-indent-setup` and `yank-indent-teardown`.
 
 ## Usage
 
