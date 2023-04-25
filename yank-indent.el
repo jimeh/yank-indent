@@ -5,7 +5,7 @@
 ;; Keywords: convenience, yank, indent
 ;; Package-Requires: ((emacs "25.1"))
 ;; x-release-please-start-version
-;; Version: 0.1.0
+;; Version: 0.2.0
 ;; x-release-please-end
 
 ;; This file is not part of GNU Emacs.
