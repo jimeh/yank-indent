@@ -127,37 +127,6 @@ specific modes and their derived modes from having
        (or (member major-mode yank-indent-global-exact-modes)
            (apply #'derived-mode-p yank-indent-global-derived-modes))))
 
-(defvar yank-indent--initial-setup nil)
-
-(defun yank-indent--is-setup-p ()
-  "Return non-nil if required advice is setup."
-  (and (advice-member-p #'yank-indent--after-yank-advice #'yank)
-       (advice-member-p #'yank-indent--after-yank-advice #'yank-pop)))
-
-;;;###autoload
-(defun yank-indent-setup ()
-  "Setup advice on `yank' and `yank-pop' as required by `yank-indent-mode'.
-
-First time `yank-indent-mode' is enabled it will automatically
-call `yank-indent-setup' if needed.
-
-Setup can be undone with `yank-indent-teardown', but enabling
-`yank-indent-mode' again after that will not run setup again."
-  (interactive)
-  (advice-add #'yank :after #'yank-indent--after-yank-advice)
-  (advice-add #'yank-pop :after #'yank-indent--after-yank-advice)
-  (setq yank-indent--initial-setup t))
-
-;;;###autoload
-(defun yank-indent-teardown ()
-  "Undo `yank-indent-setup' by removing advice from `yank' and `yank-pop'.
-
-If this is used, `yank-indent-setup' must be explicitly called
-before `yank-indent-mode' will work again."
-  (interactive)
-  (advice-remove #'yank #'yank-indent--after-yank-advice)
-  (advice-remove #'yank-pop #'yank-indent--after-yank-advice))
-
 ;;;###autoload
 (define-minor-mode yank-indent-mode
   "Minor mode for automatically indenting yanked text.
@@ -169,13 +138,8 @@ prefix argument is given during yanking."
   :lighter " YI"
   :group 'yank-indent
   (if yank-indent-mode
-      ;; Auto-run advice setup if needed first time mode is enabled. Display
-      ;; warning if advice setup has been undone.
-      (when (not (yank-indent--is-setup-p))
-        (if yank-indent--initial-setup
-            (message (concat "Warning: yank-indent-mode not available, "
-                             "run `M-x yank-indent-setup' to setup."))
-          (yank-indent-setup)))))
+      (add-hook 'post-command-hook #'yank-indent--post-command-hook nil 'local)
+    (remove-hook 'post-command-hook #'yank-indent--post-command-hook 'local)))
 
 ;;;###autoload
 (define-globalized-minor-mode global-yank-indent-mode
@@ -184,20 +148,19 @@ prefix argument is given during yanking."
     (when (yank-indent--should-enable-p)
       (yank-indent-mode 1))))
 
-(defun yank-indent--after-yank-advice (&optional _)
-  "Conditionally indent the region (yanked text) after yanking.
+(defun yank-indent--post-command-hook ()
+  "Conditionally indent yanked text.
 
 Indentation is triggered only if all of the following conditions
 are met:
 
-- `yank-indent-mode' minor-mode is enabled in the current buffer.
+- `this-command' is `yank' or `yank-pop'.
+- `yank-indent-mode' is enabled.
 - Prefix argument was not provided.
 - Region size that was yanked is less than or equal to
-  `yank-indent-threshold'.
-
-This function is used as advice for `yank' and `yank-pop'
-functions."
-  (if (and yank-indent-mode
+  `yank-indent-threshold'."
+  (if (and (memq this-command '(yank yank-pop))
+           yank-indent-mode
            (not current-prefix-arg))
       (let ((beg (region-beginning))
             (end (region-end))
