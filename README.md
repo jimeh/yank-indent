@@ -59,14 +59,6 @@ Place `yank-indent.el` somewhere in your `load-path` and require it. For example
 (global-yank-indent-mode t)
 ```
 
-## Setup & Teardown
-
-Required setup that registers advice on `yank` and `yank-pop` commands is
-automatically done the first time that `yank-indent-mode` is enabled.
-
-Should you want to though you can manually add/remove the required advice with
-`yank-indent-setup` and `yank-indent-teardown`.
-
 ## Usage
 
 ### `global-yank-indent-mode`
@@ -92,11 +84,3 @@ Keep in mind that the include/exclude major-mode customizations only affect the
 global mode and which buffers it enables `yank-indent-mode` in. If you
 explicitly enable `yank-indent-mode` in a buffer, it will operate like normal
 regardless of what major-mode the buffer is using.
-
-## Under the Hood
-
-`yank-indent` registers an advice for after `yank` and `yank-pop` commands. The
-advice function verifies that `yank-indent-mode` mode is enabled in the current
-buffer, prefix argument was not given, and the yanked/pasted text was within the
-`yank-indent-threshold` in size. If all true, it will trigger indentation,
-otherwise it does nothing.
