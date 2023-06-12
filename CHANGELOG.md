@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.0](https://github.com/jimeh/yank-indent/compare/v0.2.0...v0.3.0) (2023-06-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* **setup:** Removed yank-indent-setup and yank-indent-teardown functions.
+
+### Bug Fixes
+
+* **setup:** simplify package/load setup by not using a global advice ([b047e91](https://github.com/jimeh/yank-indent/commit/b047e91b9235308f76a94dacdf40f160bee6758e))
+
 ## [0.2.0](https://github.com/jimeh/yank-indent/compare/v0.1.1...v0.2.0) (2023-04-25)
 
 
