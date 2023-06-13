@@ -84,3 +84,17 @@ Keep in mind that the include/exclude major-mode customizations only affect the
 global mode and which buffers it enables `yank-indent-mode` in. If you
 explicitly enable `yank-indent-mode` in a buffer, it will operate like normal
 regardless of what major-mode the buffer is using.
+
+## Alternative Packages
+
+- [auto-indent-mode](https://github.com/mattfidler/auto-indent-mode.el)
+  ([melpa](https://melpa.org/#/auto-indent-mode)): Triggers indentation in a
+  whole suite of scenarios, more or less trying to ensure everything is always
+  correctly indented. This also includes indenting any yanked regions. Does not
+  seem to support any thresholds to avoid triggering indentation for large
+  buffers/yanked text.
+- [snap-indent](https://github.com/jeffvalk/snap-indent)
+  ([melpa](https://melpa.org/#/snap-indent)): Very similar with the addition of
+  being able to trigger indentation on save, and extra custom formatting
+  functions to run right after indentation. But it lacks support for a yank size
+  threshold, and skipping indent with a prefix-arg.
