@@ -19,7 +19,7 @@
   <a href="https://github.com/jimeh/yank-indent/pulls">
     <img src="https://img.shields.io/github/issues-pr-raw/jimeh/yank-indent.svg?style=flat&logo=github&logoColor=white" alt="GitHub pull requests">
   </a>
-  <a href="https://github.com/jimeh/yank-indent/blob/master/LICENSE">
+  <a href="https://github.com/jimeh/yank-indent/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/jimeh/yank-indent.svg?style=flat" alt="License Status">
   </a>
 </p>
@@ -87,14 +87,13 @@ regardless of what major-mode the buffer is using.
 
 ## Alternative Packages
 
+- [snap-indent](https://github.com/jeffvalk/snap-indent)
+  ([melpa](https://melpa.org/#/snap-indent)): Very similar with the addition of
+  being able to trigger indentation on save, and extra custom formatting
+  functions to run right after indentation.
 - [auto-indent-mode](https://github.com/mattfidler/auto-indent-mode.el)
   ([melpa](https://melpa.org/#/auto-indent-mode)): Triggers indentation in a
   whole suite of scenarios, more or less trying to ensure everything is always
   correctly indented. This also includes indenting any yanked regions. Does not
   seem to support any thresholds to avoid triggering indentation for large
   buffers/yanked text.
-- [snap-indent](https://github.com/jeffvalk/snap-indent)
-  ([melpa](https://melpa.org/#/snap-indent)): Very similar with the addition of
-  being able to trigger indentation on save, and extra custom formatting
-  functions to run right after indentation. But it lacks support for a yank size
-  threshold, and skipping indent with a prefix-arg.
